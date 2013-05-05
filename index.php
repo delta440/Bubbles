@@ -7,7 +7,7 @@
 <form action = "startsession.php" method = "post">
 UserName: <input name = "username" type = "text"/>
 Password: <input name = "password" type = "password"/>
-<input type = "submit" value = "ARRR!!!"/>
+<input type = "submit" value = "Submit"/>
 </form>
 <body>
 <html>

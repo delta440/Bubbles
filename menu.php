@@ -10,8 +10,8 @@ switch($_POST['selection']){
 		session_destroy();
 		echo "Successfully Logged Out";
 		break;
-	case "Add New Customer":
-		include('createcustomer.php');
+	case "Add Customer":
+		header('Location:addcustomer.php');
 		break;
 	case "Purchase Form":
 		header('Location:purchaseform.php');
@@ -23,12 +23,37 @@ switch($_POST['selection']){
 }
 ?>
 <html><body>
-<h4>Please select an operation</h4>
+<h3>Edit Customers:</h3>
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method = "post">
+<select name = "selection">
+<option>Add Customer</option>
+<option>Edit Customer</option>
+</select>
+<input type="submit" value="Submit"/>
+</form>
+
+<h3>Edit Dogs:</h3>
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method = "post">
+<select name = "selection">
+<option>Add Dog</option>
+<option>Edit Dog</option>
+</select>
+<input type="submit" value="Submit"/>
+</form>
+
+<h3>Edit Schedule:</h3>
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method = "post">
+<select name = "selection">
+<option>Book Dog</option>
+<option>View/Edit Day</option>
+</select>
+<input type="submit" value="Submit"/>
+</form>
+
+<h3>Administration:</h3>
 <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method = "post">
 <select name = "selection">
 <option>Setup Database</option>
-<option>Add New Customer</option>
-<option>Purchase Form</option>
 <option>Logout</option>
 </select>
 <input type="submit" value="Submit"/>
