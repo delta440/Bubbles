@@ -20,7 +20,7 @@ echo mysql_error();
 
 mysql_query("
 	CREATE TABLE IF NOT EXISTS PhoneNumbers(
-	PhoneNumber int(11),
+	PhoneNumber varchar(11),
 	Type varchar(10),
 	CustomerID int NOT NULL,
 	PRIMARY KEY(PhoneNumber),
