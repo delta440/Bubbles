@@ -13,8 +13,8 @@ switch($_POST['selection']){
 	case "Add Customer":
 		header('Location:addcustomer.php');
 		break;
-	case "Purchase Form":
-		header('Location:purchaseform.php');
+	case "Edit Customer":
+		header('Location:editcustomer.php');
 		break;
 	default:
 		echo "has not been implemented";

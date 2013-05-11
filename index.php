@@ -1,8 +1,5 @@
-<html>
-<head>
-<title>Bubble's Customer Management System</title>
-</head>
-<body>
+<html><head><title>Bubble's Customer Management System</title></head><body>
+
 <h1>Bubble's Customer Management System</h1>
 <form action = "startsession.php" method = "post">
 UserName: <input name = "username" type = "text"/>
