@@ -23,7 +23,8 @@ mysql_query("
 	PhoneNumber varchar(11),
 	Type varchar(10),
 	CustomerID int NOT NULL,
-	PRIMARY KEY(PhoneNumber),
+	PhoneNumberID int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY(PhoneNumberID),
 	FOREIGN KEY(CustomerID) REFERENCES Customer(CustomerID))");
 echo mysql_error();
 

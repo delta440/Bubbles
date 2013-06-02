@@ -1,8 +1,8 @@
 <?php
 
 if(isset($_POST['selection'])){
-session_start();
-switch($_POST['selection']){
+	session_start();
+	switch($_POST['selection']){
 	case "Setup Database":
 		header("Location:installdatabase.php");
 		break;
@@ -19,7 +19,7 @@ switch($_POST['selection']){
 	default:
 		echo "has not been implemented";
 		break;
-		}
+	}
 }
 ?>
 <html><body>
