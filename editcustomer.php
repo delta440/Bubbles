@@ -1,11 +1,20 @@
 <html><head><title>Edit Customer</title></head></title>
 
+<?php if(isset($_POST['delete'])){
+	include('sqlconnect.php');
+	mysql_query("USE bubbles");
+	$query = "DELETE FROM PhoneNumbers 
+			WHERE PhoneNumberID = '".$_POST['deleteid']."'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+}
+?>
+
 <?php if(isset($_POST['submit']) || isset($_POST['addphone'])){
 	include('sqlconnect.php');
 	mysql_query("USE bubbles");
 	$FirstName = $_POST['firstname'];
 	$LastName = $_POST['lastname'];
-	$CustomerID = $_SESSION['customerid'];
+	$CustomerID = $_POST['customerid'];
 	$query = "UPDATE Customer 
 			SET FirstName='$FirstName', LastName = '$LastName'
 			WHERE CustomerID = '$CustomerID'";
@@ -38,7 +47,6 @@
 	$result1 = mysql_query($query1) or die('Query"' . $query1 . '" failed' . mysql_error());
 	while($row1 = mysql_fetch_array($result1)){
 		$CustomerID = $row1['CustomerID'];
-		$_SESSION['customerid'] = $CustomerID;
 		$query = "SELECT * FROM Customer WHERE CustomerID = '$CustomerID'";
 		$result = mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
 		$row = mysql_fetch_array($result);
@@ -62,8 +70,62 @@
 			echo '<option selected>Cell</option>';
 			else
 			echo '<option>Cell</option>';
-			echo '</select><br />';
+			echo '</select>';
+			echo '<form action="'.htmlentities($_SERVER['PHP_SELF']) . ' method="post">';
+			echo '<input name = "delete" type = "submit" value = "Delete"/><br />';
+			echo '<input name = "deleteid" type = "hidden" value ="'.$row['PhoneNumberID'].'"/>';
 		}
+		echo '<input name="customerid" type = "hidden" value='.$CustomerID.'>';
+		echo 'New Phone Number: <input name = "newphone" type = "text"/>';
+		echo '<select name = "newtype"><option>Home</option><option>Work</option><option>Cell</option></select><br />';
+		echo '<input name = "submit" type = "submit" value = "Submit"/>';
+		echo '<input name = "addphone" type = "submit" value = "Add Phone Number"/><br />';
+		echo '</form>';
+		echo '</body></html>';
+	}
+}
+?>
+
+<?php if(isset($_POST['searchname'])){
+	include('sqlconnect.php');
+	mysql_query("USE bubbles");
+	$FirstName = $_POST['firstname'];
+	$LastName = $_POST['lastname'];
+	if(!empty($FirstName) && !empty($LastName))
+		$query1 = "SELECT * FROM Customer WHERE FirstName LIKE '$FirstName' AND LastName LIKE '$LastName'";
+	else if(!empty($FirstName))
+		$query1 = "SELECT * FROM Customer WHERE FirstName LIKE '$FirstName'";
+	else 
+		$query1 = "SELECT * FROM Customer WHERE LastName LIKE '$LastName'";
+	$result1 = mysql_query($query1) or die('Query"' . $query1 . '" failed' . mysql_error());
+	while($row1 = mysql_fetch_array($result1)){
+		$CustomerID = $row1['CustomerID'];
+		echo "<html><body><form action=".htmlentities($_SERVER['PHP_SELF']) . ' method="post">';
+		echo 'FirstName: <input name = "firstname" type = "text" value = '.$row1['FirstName'].' /><br />';
+		echo 'LastName: <input name = "lastname" type = "text" value = '.$row1['LastName'].' /><br />';
+		$query = "SELECT * FROM PhoneNumbers WHERE CustomerID = '$CustomerID'";
+		$result = mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+		while($row = mysql_fetch_array($result)){
+			echo 'PhoneNumber: <input name = "PhoneNumber'.$row['PhoneNumberID'].'" type = "text" value = '.$row['PhoneNumber'].' />';
+			echo 'Type: <select name = "Type'.$row['PhoneNumberID'].'" >';
+			if($row['Type'] == 'Home')
+			echo '<option selected>Home</option>';
+			else
+			echo '<option>Home</option>';
+			if($row['Type'] == 'Work')
+			echo '<option selected>Work</option>';
+			else
+			echo '<option>Work</option>';
+			if($row['Type'] == 'Cell')
+			echo '<option selected>Cell</option>';
+			else
+			echo '<option>Cell</option>';
+			echo '</select>';
+			echo '<form action="'.htmlentities($_SERVER['PHP_SELF']) . ' method="post">';
+			echo '<input name = "delete" type = "submit" value = "Delete"/><br />';
+			echo '<input name = "deleteid" type = "hidden" value ="'.$row['PhoneNumberID'].'"/>';
+		}
+		echo '<input name="customerid" type = "hidden" value='.$CustomerID.'>';
 		echo 'New Phone Number: <input name = "newphone" type = "text"/>';
 		echo '<select name = "newtype"><option>Home</option><option>Work</option><option>Cell</option></select><br />';
 		echo '<input name = "submit" type = "submit" value = "Submit"/>';
@@ -94,3 +156,9 @@ LastName: <input name = "lastname" type = "text"/>
 	</body></html>
 
 	<?php } ?>
+	
+<html><body>
+<form action="menu.php">
+<input type = "submit" value = "Back to menu"/>
+</form>
+</body></html>
