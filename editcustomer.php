@@ -50,7 +50,7 @@
 		$query = "SELECT * FROM Customer WHERE CustomerID = '$CustomerID'";
 		$result = mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
 		$row = mysql_fetch_array($result);
-		echo "<html><body><form action=".htmlentities($_SERVER['PHP_SELF']) . ' method="post">';
+		echo '<form action="'.htmlentities($_SERVER['PHP_SELF']) . '" method="post">';
 		echo 'FirstName: <input name = "firstname" type = "text" value = '.$row['FirstName'].' /><br />';
 		echo 'LastName: <input name = "lastname" type = "text" value = '.$row['LastName'].' /><br />';
 		$query = "SELECT * FROM PhoneNumbers WHERE CustomerID = '$CustomerID'";
@@ -71,7 +71,7 @@
 			else
 			echo '<option>Cell</option>';
 			echo '</select>';
-			echo '<form action="'.htmlentities($_SERVER['PHP_SELF']) . ' method="post">';
+			echo '<form action="'.htmlentities($_SERVER['PHP_SELF']) . '" method="post">';
 			echo '<input name = "delete" type = "submit" value = "Delete"/><br />';
 			echo '<input name = "deleteid" type = "hidden" value ="'.$row['PhoneNumberID'].'"/>';
 		}
