@@ -51,13 +51,14 @@ echo mysql_error();
 
 mysql_query("
 	CREATE TABLE IF NOT EXISTS Scheduled(
+	ScheduleID int NOT NULL AUTO_INCREMENT,
 	DateOfDay date NOT NULL,
 	TimeOfDay time,
 	SpecialComments text,
 	Holiday bool,
 	DogID int NOT NULL,
 	FOREIGN KEY(DogID) REFERENCES Dog(DogID),
-	PRIMARY KEY(DateOfDay))");
+	PRIMARY KEY(ScheduleID))");
 echo mysql_error();	
 
 ?>

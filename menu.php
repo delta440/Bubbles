@@ -22,6 +22,9 @@ if(isset($_POST['selection'])){
 	case "Edit Dog":
 		header('Location:editdog.php');
 		break;
+	case "Book Dog":
+		header('Location:bookdog.php');
+		break;
 	default:
 		echo "has not been implemented";
 		break;
