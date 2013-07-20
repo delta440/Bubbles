@@ -5,10 +5,17 @@
 	mysql_query("USE bubbles");
 	$Date = $_SESSION['Date'];
 	$Time = $_SESSION['Time'];
+	$AMPM = $_SESSION['AMPM'];
 	$DogID = $_POST['dogid'];
 	$SpecialComments = $_POST['specialcomments'];
-	$query = "INSERT INTO Scheduled(DateofDay, TimeofDay, SpecialComments, DogID)
-	 VALUES('$Date', '$Time', '$SpecialComments', '$DogID')";
+	if($AMPM == "AM"){
+		$query = "INSERT INTO Scheduled(PM, DateofDay, TimeofDay, SpecialComments, DogID)
+		VALUES(FALSE, '$Date', '$Time', '$SpecialComments', '$DogID')";
+	}
+	else{
+		$query = "INSERT INTO Scheduled(PM, DateofDay, TimeofDay, SpecialComments, DogID)
+		VALUES(TRUE, '$Date', '$Time', '$SpecialComments', '$DogID')";
+	}
 	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
 	}
 	?>
@@ -131,8 +138,12 @@
 	<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
 	<h3> Please enter the date and time you wish to book the dog for </h3> <br />
 	Date (YY-MM-DD): <input name = "date" type = "text"/> <br />
-	Time (24H) (HH-MM): <input name = "time" type = "text"/> <br />
-	<input name = "setdate" type = "submit"/> <br />
+	Time (24H) (HH:MM): <input name = "time" type = "text"/> 
+	<select name = "AMPM">
+	<option>AM</option>
+	<option>PM</option>
+	</select><br />
+	<input name = "setdate" type = "submit" value = "Continue"/> <br />
 	</form>
 	</html>
 <?php } ?>
@@ -141,6 +152,7 @@
 	include('sqlconnect.php');
 	$_SESSION['Date'] = $_POST['date'];
 	$_SESSION['Time'] = $_POST['time'];
+	$_SESSION['AMPM'] = $_POST['AMPM'];
 	?>
 	<html>
 	<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">

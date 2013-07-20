@@ -55,7 +55,7 @@ mysql_query("
 	DateOfDay date NOT NULL,
 	TimeOfDay time,
 	SpecialComments text,
-	Holiday bool,
+	PM bool,
 	DogID int NOT NULL,
 	FOREIGN KEY(DogID) REFERENCES Dog(DogID),
 	PRIMARY KEY(ScheduleID))");
