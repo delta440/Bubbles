@@ -1,5 +1,14 @@
 <html><head><title>View/Edit Day</title></head></html>
 
+<?php if(isset($_POST['delete'])){
+include('sqlconnect.php');
+	mysql_query("USE bubbles");
+	$ScheduleID = $_POST['scheduleid'];
+	$query ="DELETE FROM Scheduled WHERE ScheduleID = '$ScheduleID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+}
+?>
+
 <?php if(isset($_POST['update'])){
 	include('sqlconnect.php');
 	mysql_query("USE bubbles");

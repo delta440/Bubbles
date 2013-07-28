@@ -1,5 +1,18 @@
 <html><head><title>Edit Dog</title></head></title>
 
+<?php if(isset($_POST['deletedog'])){
+	include('sqlconnect.php');
+	mysql_query("USE bubbles");
+	$DogID = $_POST['dogid'];
+	$query = "DELETE FROM Scheduled WHERE DogID = '$DogID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+	$query = "DELETE FROM Owns WHERE DogID = '$DogID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+	$query = "DELETE FROM Dog WHERE DogID = '$DogID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+}
+?>
+
 <?php if(isset($_POST['updatedog'])){
 	include('sqlconnect.php');
 	mysql_query("USE bubbles");
@@ -41,6 +54,7 @@
 	echo ''.$row['Instructions'].'</textarea><br />';
 	echo '<input name = "dogid" type = "hidden" value = "'.$DogID.'"/><br />';
 	echo '<input name = "updatedog" type = "submit" value = "Submit"/>';
+	echo '<input name = "deletedog" type = "submit" value = "Delete Dog"/><br />';
 	echo '</form></body></html>';
 }
 ?>

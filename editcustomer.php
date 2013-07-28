@@ -1,5 +1,27 @@
 <html><head><title>Edit Customer</title></head></title>
 
+<?php if(isset($_POST['deletecus'])){
+	include('sqlconnect.php');
+	mysql_query("USE bubbles");
+	$CustomerID = $_POST['customerid'];
+	$query = "SELECT * FROM Owns WHERE CustomerID = '$CustomerID'";
+	$result = mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+	while($OwnInfo = mysql_fetch_array($result)){
+		$query1 = "DELETE FROM Owns WHERE OwnID = ".$OwnInfo['OwnID'];
+		mysql_query($query1) or die('Query"' . $query1 . '" failed' . mysql_error());
+		$query1 = "DELETE FROM Scheduled WHERE DogID = ".$OwnInfo['DogID'];
+		mysql_query($query1) or die('Query"' . $query1 . '" failed' . mysql_error());
+		$query1 = "DELETE FROM Dog WHERE DogID = ".$OwnInfo['DogID'];
+		mysql_query($query1) or die('Query"' . $query1 . '" failed' . mysql_error());
+
+	}
+	$query = "DELETE FROM PhoneNumbers WHERE CustomerID = '$CustomerID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+	$query = "DELETE FROM Customer WHERE CustomerID = '$CustomerID'";
+	mysql_query($query) or die('Query"' . $query . '" failed' . mysql_error());
+}
+?>
+
 <?php if(isset($_POST['delete'])){
 	include('sqlconnect.php');
 	mysql_query("USE bubbles");
@@ -79,7 +101,8 @@
 		echo 'New Phone Number: <input name = "newphone" type = "text"/>';
 		echo '<select name = "newtype"><option>Home</option><option>Work</option><option>Cell</option></select><br />';
 		echo '<input name = "submit" type = "submit" value = "Submit"/>';
-		echo '<input name = "addphone" type = "submit" value = "Add Phone Number"/><br />';
+		echo '<input name = "addphone" type = "submit" value = "Add Phone Number"/>';
+		echo '<input name = "deletecus" type = "submit" value = "Delete Customer"/><br />';
 		echo '</form>';
 		echo '</body></html>';
 	}
@@ -129,7 +152,8 @@
 		echo 'New Phone Number: <input name = "newphone" type = "text"/>';
 		echo '<select name = "newtype"><option>Home</option><option>Work</option><option>Cell</option></select><br />';
 		echo '<input name = "submit" type = "submit" value = "Submit"/>';
-		echo '<input name = "addphone" type = "submit" value = "Add Phone Number"/><br />';
+		echo '<input name = "addphone" type = "submit" value = "Add Phone Number"/>';
+		echo '<input name = "deletecus" type = "submit" value = "Delete Customer"/><br />';
 		echo '</form>';
 		echo '</body></html>';
 	}
